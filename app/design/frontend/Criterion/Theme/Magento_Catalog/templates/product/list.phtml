@@ -50,16 +50,23 @@ $subcategories = $this->getLayer()->getCurrentCategory()->getCategories($catId);
 
 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 
- if($subcategories->count()>0 && $catId ==8){ ?>
+ if($catId ==8){ ?>
 	<div class="tab">
-	<?php foreach($subcategories as $subcategory){
+	<?php 
+	$_object_manager = $objectManager->create('Magento\Catalog\Model\Category')->load($catId);
+	
+	$subcategories = $_object_manager->getChildrenCategories();
+	
+	foreach($subcategories as $subcategory){
+		if($subcategory->getIsActive()){
 		$catPart = explode("(", $subcategory->getName());
 		$catPart = isset($catPart[0])?$catPart:$subcategory->getName(); ?>
 		
 		  <button class="tablinks" onclick="openCatTab(event, '<?php echo $subcategory->getId() ?>')"><b><?php echo $catPart[0] ?></b> <br><span><?php echo isset($catPart[1])?'('.$catPart[1]:''; ?></span></button>
-	<?php  } ?>
+	<?php  }  } ?>
 	</div>
 		<?php foreach($subcategories as $subcategory){
+			  if($subcategory->getIsActive()){
 			  $subcatAre = $objectManager->create('Magento\Catalog\Model\Category')->load($subcategory->getId()); 
 			  
 			  $catPart = explode("(", $subcategory->getName());
@@ -114,7 +121,7 @@ $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 					</div>
 				</div>
 			</div>
-		<?php } ?>		
+		<?php } } ?>		
 		
 	<?php } else { ?>
 	
