@@ -185,6 +185,9 @@ $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
                                     <?php if ($_product->isSaleable()): ?>
                                         <?php $postParams = $block->getAddToCartPostParams($_product); ?>
                                         <form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post">
+											<div class="quantity">
+											<input type="text" name="qty" id="qty" maxlength="12" value="1" title="" class="input-text qty" />
+											</div>
                                             <input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $postParams['data']['product']; ?>">
                                             <input type="hidden" name="<?php /* @escapeNotVerified */ echo Action::PARAM_NAME_URL_ENCODED; ?>" value="<?php /* @escapeNotVerified */ echo $postParams['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
                                             <?php echo $block->getBlockHtml('formkey')?>
@@ -233,3 +236,27 @@ $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         </script>
     <?php endif; ?>
 	<?php endif; } ?>
+	
+<script>
+ require(['jquery', 'jquery/ui'], function($){ 
+       jQuery("div.quantity").append('<input type="button" value="+" id="add1" class="plus" />').prepend('<input type="button" value="-" id="minus1" class="minus" />');
+        jQuery(".plus").click(function()
+        {
+            var currentVal = parseInt(jQuery(this).prev(".qty").val());
+
+            if (!currentVal || currentVal=="" || currentVal == "NaN") currentVal = 1;
+
+            jQuery(this).prev(".qty").val(currentVal + 1);
+        });
+
+        jQuery(".minus").click(function()
+        {
+            var currentVal = parseInt(jQuery(this).next(".qty").val());
+            if (currentVal == "NaN") currentVal = 1;
+            if (currentVal > 1)
+            {
+                jQuery(this).next(".qty").val(currentVal - 1);
+            }
+        });
+ });
+</script>
