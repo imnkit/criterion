@@ -50,6 +50,10 @@ $subcategories = $this->getLayer()->getCurrentCategory()->getCategories($catId);
 
 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 
+$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+
+
+
  if($catId ==8){ ?>
 	<div class="tab">
 	<?php 
@@ -84,8 +88,9 @@ $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 										->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/category/' . $subcat->getThumbnail();
 							
 							if ($imgurl) { ?>
+							
 								<li>
-									<a href="<?php echo $subcatis->getRequestPath() ?>">
+									<a href="<?php echo $storeManager->getStore()->getBaseUrl().$subcatis['request_path'] ?>">
                                     <span class="img-section"><img src="<?php echo $imgurl ?>" style="width:200px; height: 200px;" alt="<?php echo $subcat->getName() ?>" /></span>
 									<strong><?php echo $subcat->getName() ?></strong></a>
 								</li>
