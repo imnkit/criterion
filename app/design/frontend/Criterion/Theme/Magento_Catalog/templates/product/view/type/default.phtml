@@ -10,6 +10,45 @@
 <?php /* @var $block \Magento\Catalog\Block\Product\View\AbstractView */?>
 <?php $_product = $block->getProduct() ?>
 
+
+
+<script>
+function openPrdTab(evt, catId) {
+    var i, tablinks, subbucat;
+	subbucat = document.getElementsByClassName("left-right-both");
+	tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+		subbucat[i].style.display = "none";
+		tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    document.getElementById('prd-'+catId).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+ require(['jquery', 'jquery/ui'], function($){  
+    $(document).ready(function(){
+		
+		$("#product-left-tab").insertAfter(".product-info-main");
+		$(".product-info-main .overview").prependTo('#prd-spec');
+		$(".product-info-main").prependTo('#prd-pricing');
+		 $('#product-left-tab').addClass('product-info-main');
+		//$(".product-info-main").insertAfter("#product-left-tab");
+    }); 
+ }); 
+
+</script>
+
+<div id="product-left-tab">
+
+	<button class="tablinks active" onclick="openPrdTab(event, 'pricing')"><b>Pricing</b></button>
+	<button class="tablinks" onclick="openPrdTab(event, 'spec')" id="speci-overview"><b>Specifications</b></button>
+
+	<div id="prd-pricing" class="left-right-both"></div>
+	<div id="prd-spec" class="left-right-both" style="display:none"></div>
+</div>
+
+
 <?php if ($block->displayProductStockStatus()): ?>
     <?php if ($_product->isAvailable()): ?>
         <div class="stock available" title="<?php /* @escapeNotVerified */ echo __('Availability') ?>">
