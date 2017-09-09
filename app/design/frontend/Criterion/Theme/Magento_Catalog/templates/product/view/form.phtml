@@ -13,7 +13,25 @@
  */
 ?>
 <?php $_helper = $this->helper('Magento\Catalog\Helper\Output'); ?>
-<?php $_product = $block->getProduct(); ?>
+<?php $_product = $block->getProduct(); 
+
+
+
+$objectManager  = \Magento\Framework\App\ObjectManager::getInstance();
+$storeManager= $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+$customerUrl        = $storeManager->getStore()->getUrl('customer/account/login');
+$filterUrl        = $storeManager->getStore()->getUrl('catalogsearch/result/?q=crite');
+
+
+?>
+
+<div class="login_register">
+	<h5>Note: If you already have an account, <a href="<?php echo $customerUrl ?>" title="Login"> Login</a> to view your custom pricing. </h5>
+</div>
+
+<h5>
+	Not the product you are looking for? <a href="<?php echo $filterUrl ?>" title="Click Here">Click here</a> to search
+</h5>
 
 <div class="product-add-form">
     <form action="<?php /* @escapeNotVerified */ echo $block->getSubmitUrl($_product) ?>" method="post"
