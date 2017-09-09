@@ -85,8 +85,19 @@
 <script>
 	require([
 		'jquery'
-	], function ($) {
-		
+	], function ($) { 
+			$(window).load(function(){ 
+				//$('#om ul li ul').css('opacity','0');
+				//$('#om ul li ul').hide();
+				/* jQuery('#om ul li > ul').css('display','none'); */
+				/* jQuery('#om ul li > ul:nth-child(2)').css('display','none');
+				jQuery('#om ul li > ul:nth-child(3)').css('display','none');
+				jQuery('#om ul li > ul:nth-child(4)').css('display','none');
+				jQuery('#om ul li > ul:nth-child(5)').css('display','none');
+				jQuery('#om ul li > ul:nth-child(6)').css('display','none'); */
+				 
+			});
+			
 		$('.mega-menu-icons img').each(function() {
 				var iconCls	= $(this).attr('iconclass');
 				var iconImg = $(this).attr('src');
@@ -165,7 +176,7 @@ $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 $subcategory = $objectManager->create('Magento\Catalog\Model\Category')->load($catId);           
 $subcats = $subcategory->getChildrenCategories();
 ?>
-<ul class="level3-subcat-images" >
+<ul class="level3-subcat-images" style="display:none">
 	<?php
 	$i = 1;
 	foreach ($subcats as $subcat) {
