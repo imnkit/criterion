@@ -177,10 +177,31 @@ $storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface'
                         <strong class="product name product-item-name">
                             <a class="product-item-link"
                                href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>">
+							   <?php if(strlen($_product->getName()) > 30){ ?>
+								<?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, substr($_product->getName(),0,30), 'name').'...'; ?>
+							   <?php } else { ?>
                                 <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
+							   <?php } ?>
                             </a>
                         </strong>
-                        <?php echo $block->getReviewsSummaryHtml($_product, $templateType); ?>
+                        <?php 
+						
+						$reviewFactory = $objectManager->create('Magento\Review\Model\Review');
+
+						$reviewFactory->getEntitySummary($_product, 1);
+						$rating = $_product->getRatingSummary()->getRatingSummary();
+						if($rating)
+						{
+							echo $block->getReviewsSummaryHtml($_product, $templateType);
+						} else { ?>
+							<div class="product-reviews-summary short">
+								<div class="rating-summary">
+									<div class="rating-result">
+										<span style="width:0%"><span></span></span>
+									</div>
+								</div>
+							</div>
+						<?php } ?>
                         <?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
                         <?php echo $block->getProductDetailsHtml($_product); ?>
 
@@ -212,11 +233,11 @@ $storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface'
                                         <?php endif; ?>
                                     <?php endif; ?>
                                 </div>
-                                <div data-role="add-to-links" class="actions-secondary"<?php echo strpos($pos, $viewMode . '-secondary') ? $position : ''; ?>>
+                                <!-- <div data-role="add-to-links" class="actions-secondary"<?php echo strpos($pos, $viewMode . '-secondary') ? $position : ''; ?>>
                                     <?php if ($addToBlock = $block->getChildBlock('addto')): ?>
                                         <?php echo $addToBlock->setProduct($_product)->getChildHtml(); ?>
                                     <?php endif; ?>
-                                </div>
+                                </div> -->
                             </div>
                             <?php if ($showDescription):?>
                                 <div class="product description product-item-description">
