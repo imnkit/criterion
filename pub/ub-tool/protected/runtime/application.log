@@ -1,0 +1,60 @@
+2017/08/30 12:20:19 [error] [php] date(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected the timezone 'UTC' for now, but please set date.timezone to select your timezone. (/home/criterion/pub/ub-tool/protected/views/layouts/main.php:28)
+Stack trace:
+#0 /home/criterion/pub/ub-tool/yii/web/CBaseController.php(95): MigrateController->renderInternal()
+#1 /home/criterion/pub/ub-tool/yii/web/widgets/CContentDecorator.php(76): MigrateController->renderFile()
+#2 /home/criterion/pub/ub-tool/yii/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate()
+#3 /home/criterion/pub/ub-tool/yii/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput()
+#4 /home/criterion/pub/ub-tool/yii/web/CBaseController.php(214): CContentDecorator->run()
+#5 /home/criterion/pub/ub-tool/yii/web/CBaseController.php(308): MigrateController->endWidget()
+#6 /home/criterion/pub/ub-tool/protected/views/layouts/2column_left.php(35): MigrateController->endContent()
+#7 /home/criterion/pub/ub-tool/yii/web/CBaseController.php(126): require()
+#8 /home/criterion/pub/ub-tool/yii/web/CBaseController.php(95): MigrateController->renderInternal()
+#9 /home/criterion/pub/ub-tool/yii/web/CController.php(784): MigrateController->renderFile()
+#10 /home/criterion/pub/ub-tool/protected/controllers/MigrateController.php(200): MigrateController->render()
+#11 /home/criterion/pub/ub-tool/yii/web/actions/CInlineAction.php(49): MigrateController->actionStep1()
+#12 /home/criterion/pub/ub-tool/yii/web/CController.php(308): CInlineAction->runWithParams()
+#13 /home/criterion/pub/ub-tool/yii/web/CController.php(286): MigrateController->runAction()
+#14 /home/criterion/pub/ub-tool/yii/web/CController.php(265): MigrateController->runActionWithFilters()
+#15 /home/criterion/pub/ub-tool/yii/web/CWebApplication.php(282): MigrateController->run()
+#16 /home/criterion/pub/ub-tool/yii/web/CWebApplication.php(141): CWebApplication->runController()
+#17 /home/criterion/pub/ub-tool/yii/base/CApplication.php(184): CWebApplication->processRequest()
+#18 /home/criterion/pub/ub-tool/index.php(13): CWebApplication->run()
+REQUEST_URI=/criterion/pub/ub-tool/index.php/migrate/step1
+2017/08/30 12:38:22 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'criterion1.core_website' doesn't exist. The SQL statement executed was: SHOW FULL COLUMNS FROM `core_website`.
+2017/08/30 12:38:22 [error] [exception.CDbException] exception 'CDbException' with message 'The table "{{core_website}}" for active record class "Mage1Website" cannot be found in the database.' in /home/criterion/pub/ub-tool/yii/db/ar/CActiveRecord.php:2385
+Stack trace:
+#0 /home/criterion/pub/ub-tool/yii/db/ar/CActiveRecord.php(411): CActiveRecordMetaData->__construct(Object(Mage1Website))
+#1 /home/criterion/pub/ub-tool/yii/db/ar/CActiveRecord.php(661): CActiveRecord->getMetaData()
+#2 /home/criterion/pub/ub-tool/yii/db/ar/CActiveRecord.php(1355): CActiveRecord->getTableSchema()
+#3 /home/criterion/pub/ub-tool/yii/db/ar/CActiveRecord.php(1475): CActiveRecord->query(Object(CDbCriteria), true)
+#4 /home/criterion/pub/ub-tool/protected/controllers/MigrateController.php(217): CActiveRecord->findAll('code <> 'admin'')
+#5 /home/criterion/pub/ub-tool/yii/web/actions/CInlineAction.php(49): MigrateController->actionStep2()
+#6 /home/criterion/pub/ub-tool/yii/web/CController.php(308): CInlineAction->runWithParams(Array)
+#7 /home/criterion/pub/ub-tool/yii/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#8 /home/criterion/pub/ub-tool/yii/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#9 /home/criterion/pub/ub-tool/yii/web/CWebApplication.php(282): CController->run('step2')
+#10 /home/criterion/pub/ub-tool/yii/web/CWebApplication.php(141): CWebApplication->runController('migrate/step2')
+#11 /home/criterion/pub/ub-tool/yii/base/CApplication.php(184): CWebApplication->processRequest()
+#12 /home/criterion/pub/ub-tool/index.php(13): CApplication->run()
+#13 {main}
+REQUEST_URI=/criterion/pub/ub-tool/index.php/migrate/step2
+HTTP_REFERER=http://119.82.68.254/criterion/pub/ub-tool/index.php/migrate/step1
+---
+2017/08/31 07:45:37 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '17' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `catalog_product_entity_media_gallery` (`attribute_id`, `media_type`, `disabled`, `value_id`, `value`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4).
+2017/08/31 07:45:37 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '17' for key 'PRIMARY'. The SQL statement executed was: INSERT INTO `catalog_product_entity_media_gallery` (`attribute_id`, `media_type`, `disabled`, `value_id`, `value`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4)' in /home/criterion/pub/ub-tool/yii/db/CDbCommand.php:358
+Stack trace:
+#0 /home/criterion/pub/ub-tool/yii/db/ar/CActiveRecord.php(1080): CDbCommand->execute()
+#1 /home/criterion/pub/ub-tool/yii/db/ar/CActiveRecord.php(809): CActiveRecord->insert(NULL)
+#2 /home/criterion/pub/ub-tool/protected/controllers/MigrateController.php(1194): CActiveRecord->save()
+#3 /home/criterion/pub/ub-tool/yii/web/actions/CInlineAction.php(49): MigrateController->actionStep5()
+#4 /home/criterion/pub/ub-tool/yii/web/CController.php(308): CInlineAction->runWithParams(Array)
+#5 /home/criterion/pub/ub-tool/yii/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#6 /home/criterion/pub/ub-tool/yii/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /home/criterion/pub/ub-tool/yii/web/CWebApplication.php(282): CController->run('step5')
+#8 /home/criterion/pub/ub-tool/yii/web/CWebApplication.php(141): CWebApplication->runController('migrate/step5')
+#9 /home/criterion/pub/ub-tool/yii/base/CApplication.php(184): CWebApplication->processRequest()
+#10 /home/criterion/pub/ub-tool/index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/criterion/pub/ub-tool/index.php/migrate/step5
+HTTP_REFERER=http://119.82.68.254/criterion/pub/ub-tool/index.php/migrate/step5
+---

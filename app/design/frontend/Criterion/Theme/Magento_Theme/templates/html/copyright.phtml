@@ -1,0 +1,19 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<small class="copyright">
+    <span><?php /* @escapeNotVerified */ echo $block->getCopyright() ?></span>
+</small>
+
+<script type="text/javascript">
+require(['jquery'], function ($) {
+$(document).ready(function () {
+if($(window).width() < 768){
+$( ".block-search" ).insertAfter( ".header-phone-number" ); 
+}
+});
+});
+</script>

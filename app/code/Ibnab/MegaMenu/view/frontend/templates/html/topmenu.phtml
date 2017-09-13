@@ -1,0 +1,185 @@
+<?php $columnsLimit = $block->getColumnsLimit() ? : 0; ?>
+<?php $_menu2 = $block->getHtml('level-top', 'mega', $columnsLimit) ?>
+<?php $_menu = $block->getHtml('level-top', 'submenu', $columnsLimit) ?>
+<?php if ($block->allowExtension()): ?>
+    <script>
+
+        require([
+            'jquery',
+            'ibnabmodernizr'
+        ], function ($) {
+
+
+            $('.menu > ul > li:has( > ul)').addClass('menu-dropdown-icon');
+            //Checks if li has sub (ul) and adds class for toggle icon - just an UI
+
+
+            $('.menu > ul > li > ul:not(:has(ul))').addClass('normal-sub');
+            //Checks if drodown menu's li elements have anothere level (ul), if not the dropdown is shown as regular dropdown, not a mega menu (thanks Luka Kladaric)
+
+            $(".menu > ul").before("<a href=\"#\" class=\"menu-mobile\">Navigation</a>");
+
+            //Adds menu-mobile class (for mobile toggle menu) before the normal menu
+            //Mobile menu is hidden if width is more then 959px, but normal menu is displayed
+            //Normal menu is hidden if width is below 959px, and jquery adds mobile menu
+            //Done this way so it can be used with wordpress without any trouble
+
+            $(".menu > ul > li").hover(function (e) {
+                if ($(window).width() > 943) {
+                    $(this).children("ul").stop(true, false).fadeToggle(150);
+                    e.preventDefault();
+                }
+            });
+            //If width is more than 943px dropdowns are displayed on hover
+
+            $(".menu > ul > li").click(function () {
+                if ($(window).width() <= 943) {
+                    $(this).children("ul").fadeToggle(150);
+                }
+            });
+            //If width is less or equal to 943px dropdowns are displayed on click (thanks Aman Jain from stackoverflow)
+
+            $(".menu-mobile").click(function (e) {
+                $(".menu > ul").toggleClass('show-on-mobile');
+                e.preventDefault();
+            });
+
+
+        });
+
+    </script>
+    <?php
+    /**
+     * Top menu for store
+     *
+     * @see \Magento\Theme\Block\Html\Topmenu
+     */
+    ?>
+    <nav class="navigation" role="navigation" >
+
+        <div class="menu" id="om">
+            <ul>
+                <?php /* @escapeNotVerified */ echo $_menu2; ?>
+            </ul>
+        </div>
+        <ul id="dm" data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>
+            <?php /* @escapeNotVerified */ echo $_menu; ?>
+        </ul>
+    </nav>
+
+<?php else : ?>
+
+    <nav class="navigation" role="navigation">
+<?php /* @escapeNotVerified */ echo $_menu; ?>
+    </nav>
+<?php endif; ?>
+<div class="staticlinks">
+<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('headermenu')->toHtml(); ?>
+</div>
+
+<div style="display: none;">
+<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('mega-menu-icons')->toHtml(); ?>
+</div>
+
+
+<script>
+	require([
+		'jquery'
+	], function ($) { 
+			
+		$('.mega-menu-icons img').each(function() {
+				var iconCls	= $(this).attr('iconclass');
+				var iconImg = $(this).attr('src');
+				$("."+iconCls).prepend('<img src="'+iconImg+'" />');
+		});
+		
+		$('.level3-subcat-images img').each(function() {
+				var _cl	= $(this).attr('navattr');
+				var _img = $(this).attr('src');
+				$("."+_cl).prepend('<img style="" src="'+_img+'" />');
+		});
+
+	});
+</script>
+
+
+
+<?php
+
+function getCategoriesChild($cid, $i, $j)
+{
+	$categoryId = $cid;
+	$_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	$_object_manager = $_objectManager->create('Magento\Catalog\Model\Category')->load($categoryId);
+	
+	$_subcats = $_object_manager->getChildrenCategories();
+	
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	$k = 1;
+	foreach ($_subcats as $subcat)
+	{
+		$imgurl = '';
+		if($subcat->getIsActive() && $i == 2 && $j == 1)
+		{
+			
+			$subcatIs = $objectManager->create('Magento\Catalog\Model\Category')->load($subcat->getId()); 
+							
+			$imgurl = $objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore()
+										->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/category/' . $subcatIs->getThumbnail();
+			if($imgurl != '')
+			{
+				echo '<img navattr="nav-'.$i.'-'.$j.'-'.$k.'" src="'.$imgurl.'" />';
+				
+			} else {
+				return true;
+			}				
+			
+			//print_r($subcat->getId()."->".$subcat->getName()."<br>");
+		}
+		$k++;
+	}
+}
+
+function getCategories($cid, $i)
+{
+	$categoryId = $cid;
+	$_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	$_object_manager = $_objectManager->create('Magento\Catalog\Model\Category')->load($categoryId);
+	
+	$_subcats = $_object_manager->getChildrenCategories();
+	$j = 1;
+	foreach ($_subcats as $subcat)
+	{
+		if($subcat->getIsActive())
+		{
+			//print_r($subcat->getId()."->".$subcat->getName()."<br>");
+			getCategoriesChild($subcat->getId(), $i, $j);
+		}
+		$j++;
+	}
+}
+
+
+$catId =2;
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$subcategory = $objectManager->create('Magento\Catalog\Model\Category')->load($catId);           
+$subcats = $subcategory->getChildrenCategories();
+?>
+<ul class="level3-subcat-images" style="display:none">
+	<?php
+	$i = 1;
+	foreach ($subcats as $subcat) {
+		if ($subcat->getIsActive()) {
+
+			$subcat_url = $subcat->getUrl();
+			$subcat_img = "";
+			$placeholder_img = "/media/placeholder.png";
+			
+			getCategories($subcat->getId(), $i, 3);
+		}
+		$i++;
+	}
+	?>
+</ul>
+
+

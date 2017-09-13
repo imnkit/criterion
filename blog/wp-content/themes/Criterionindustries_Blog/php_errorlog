@@ -1,0 +1,4 @@
+[09-May-2016 01:58:00 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/criteri7/public_html/blog/wp-content/themes/Criterionindustries_Blog/index.php on line 17
+[09-May-2016 03:35:14 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/criteri7/public_html/blog/wp-content/themes/Criterionindustries_Blog/index.php on line 17
+[09-May-2016 03:36:19 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/criteri7/public_html/blog/wp-content/themes/Criterionindustries_Blog/index.php on line 17
+[30-Aug-2016 19:59:07 CST6CDT] PHP Fatal error:  Call to undefined function get_header() in /home/criteri7/public_html/blog/wp-content/themes/Criterionindustries_Blog/index.php on line 17

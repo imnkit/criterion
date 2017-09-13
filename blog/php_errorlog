@@ -1,0 +1,4 @@
+[25-Jul-2016 06:28:06 UTC] PHP Warning:  array_unshift() expects parameter 1 to be array, null given in /home/criteri7/public_html/blog/wp-includes/class-wp-xmlrpc-server.php on line 518
+[25-Jul-2016 18:30:46 UTC] PHP Warning:  array_unshift() expects parameter 1 to be array, null given in /home/criteri7/public_html/blog/wp-includes/class-wp-xmlrpc-server.php on line 518
+[26-Jul-2016 05:28:29 UTC] PHP Warning:  array_unshift() expects parameter 1 to be array, null given in /home/criteri7/public_html/blog/wp-includes/class-wp-xmlrpc-server.php on line 518
+[11-Nov-2016 08:07:25 UTC] PHP Warning:  array_unshift() expects parameter 1 to be array, null given in /home/criteri7/public_html/blog/wp-includes/class-wp-xmlrpc-server.php on line 518
